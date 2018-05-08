@@ -97,6 +97,13 @@ type user struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+func (u *user) MarshalLogObject(enc zapcore.ObjectEncoder) error {
+	enc.AddString("name", u.Name)
+	enc.AddString("email", u.Email)
+	enc.AddInt64("createdAt", u.CreatedAt.UnixNano())
+	return nil
+}
+
 func newZapLogger(lvl zapcore.Level) *zap.Logger {
 	ec := zap.NewProductionEncoderConfig()
 	ec.EncodeDuration = zapcore.NanosDurationEncoder
