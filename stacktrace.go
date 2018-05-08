@@ -25,7 +25,7 @@ import (
 	"strings"
 	"sync"
 
-	"go.uber.org/zap/internal/bufferpool"
+	"github.com/francoispqt/zap/internal/bufferpool"
 )
 
 const _zapPackage = "go.uber.org/zap"

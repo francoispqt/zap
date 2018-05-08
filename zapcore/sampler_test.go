@@ -26,8 +26,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/francoispqt/zap/internal/ztest"
+
 	"go.uber.org/atomic"
-	"go.uber.org/zap/internal/ztest"
 	. "go.uber.org/zap/zapcore"
 	"go.uber.org/zap/zaptest/observer"
 

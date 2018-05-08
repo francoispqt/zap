@@ -25,8 +25,9 @@ import (
 	"sync"
 	"testing"
 
-	"go.uber.org/zap/internal/exit"
-	"go.uber.org/zap/internal/ztest"
+	"github.com/francoispqt/zap/internal/exit"
+	"github.com/francoispqt/zap/internal/ztest"
+
 	"go.uber.org/zap/zapcore"
 	"go.uber.org/zap/zaptest/observer"
 

@@ -25,7 +25,8 @@ import (
 	"testing"
 	"time"
 
-	"go.uber.org/zap/internal/ztest"
+	"github.com/francoispqt/zap/internal/ztest"
+
 	"go.uber.org/zap/zapcore"
 )
 

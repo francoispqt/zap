@@ -25,9 +25,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/francoispqt/zap/internal/ztest"
+
 	"go.uber.org/multierr"
 	"go.uber.org/zap"
-	"go.uber.org/zap/internal/ztest"
 	"go.uber.org/zap/zapcore"
 )
 
@@ -94,13 +95,6 @@ type user struct {
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
 	CreatedAt time.Time `json:"created_at"`
-}
-
-func (u *user) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-	enc.AddString("name", u.Name)
-	enc.AddString("email", u.Email)
-	enc.AddInt64("createdAt", u.CreatedAt.UnixNano())
-	return nil
 }
 
 func newZapLogger(lvl zapcore.Level) *zap.Logger {

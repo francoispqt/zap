@@ -86,6 +86,15 @@ func BenchmarkDisabledWithoutFields(b *testing.B) {
 			}
 		})
 	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newDisabledOnelog()
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.Info(getMessage(0))
+			}
+		})
+	})
 	b.Run("rs/zerolog", func(b *testing.B) {
 		logger := newDisabledZerolog()
 		b.ResetTimer()
@@ -155,6 +164,16 @@ func BenchmarkDisabledAccumulatedContext(b *testing.B) {
 			}
 		})
 	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newDisabledOnelog()
+		logger.Hook(getOnelogFields())
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.Info(getMessage(0))
+			}
+		})
+	})
 	b.Run("rs/zerolog", func(b *testing.B) {
 		logger := fakeZerologContext(newDisabledZerolog().With()).Logger()
 		b.ResetTimer()
@@ -212,6 +231,15 @@ func BenchmarkDisabledAddingFields(b *testing.B) {
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
 				logger.WithFields(fakeLogrusFields()).Info(getMessage(0))
+			}
+		})
+	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newDisabledOnelog()
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.InfoWithFields(getMessage(0), getOnelogFields())
 			}
 		})
 	})
@@ -339,6 +367,15 @@ func BenchmarkWithoutFields(b *testing.B) {
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
 				logger.Printf("%v %v %v %s %v %v %v %v %v %s\n", fakeFmtArgs()...)
+			}
+		})
+	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newOnelogLogger()
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.Info(getMessage(0))
 			}
 		})
 	})
@@ -471,6 +508,15 @@ func BenchmarkAccumulatedContext(b *testing.B) {
 			}
 		})
 	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newOnelogLogger().With(getOnelogFields())
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.Info(getMessage(0))
+			}
+		})
+	})
 	b.Run("rs/zerolog", func(b *testing.B) {
 		logger := fakeZerologContext(newZerolog().With()).Logger()
 		b.ResetTimer()
@@ -588,6 +634,15 @@ func BenchmarkAddingFields(b *testing.B) {
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
 				logger.WithFields(fakeLogrusFields()).Infof(getMessage(0))
+			}
+		})
+	})
+	b.Run("francoispqt/onelog", func(b *testing.B) {
+		logger := newOnelogLogger()
+		b.ResetTimer()
+		b.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				logger.InfoWithFields(getMessage(0), getOnelogFields())
 			}
 		})
 	})
