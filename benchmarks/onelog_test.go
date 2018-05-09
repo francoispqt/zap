@@ -64,8 +64,8 @@ func (tI intArray) IsNil() bool {
 
 func newOnelogLogger() *onelog.Logger {
 	logger := onelog.New(ioutil.Discard, onelog.INFO)
-	logger.Hook(func(enc onelog.Entry) {
-		enc.Int64("time", time.Now().UnixNano())
+	logger.Hook(func(e onelog.Entry) {
+		e.Int64("time", time.Now().UnixNano())
 	})
 	return logger
 }
@@ -75,16 +75,16 @@ func newDisabledOnelog() *onelog.Logger {
 }
 
 func getOnelogFields() func(onelog.Entry) {
-	return func(enc onelog.Entry) {
-		enc.Int("int", _tenInts[0])
-		enc.Array("ints", intArray(_tenInts))
-		enc.String("string", _tenStrings[0])
-		enc.Array("strings", stringArray(_tenStrings))
-		enc.Int64("time", _tenTimes[0].Unix())
-		enc.Array("times", timeArray(_tenTimes))
-		enc.Object("user1", _oneUser)
-		enc.Object("user2", _oneUser)
-		enc.Array("users", _tenUsers)
-		enc.Err("err", errExample)
+	return func(e onelog.Entry) {
+		e.Int("int", _tenInts[0])
+		e.Array("ints", intArray(_tenInts))
+		e.String("string", _tenStrings[0])
+		e.Array("strings", stringArray(_tenStrings))
+		e.Int64("time", _tenTimes[0].Unix())
+		e.Array("times", timeArray(_tenTimes))
+		e.Object("user1", _oneUser)
+		e.Object("user2", _oneUser)
+		e.Array("users", _tenUsers)
+		e.String("err", errExample.Error())
 	}
 }
