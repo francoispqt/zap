@@ -81,13 +81,13 @@ func fakeZerologFields(e *zerolog.Event) *zerolog.Event {
 func fakeZerologContext(c zerolog.Context) zerolog.Context {
 	return c.
 		Int("int", _tenInts[0]).
-		Interface("ints", _tenInts).
+		Array("ints", intArray(_tenInts)).
 		Str("string", _tenStrings[0]).
-		Interface("strings", _tenStrings).
+		Array("strings", stringArray(_tenStrings)).
 		Time("time", _tenTimes[0]).
-		Interface("times", _tenTimes).
-		Interface("user1", _oneUser).
-		Interface("user2", _oneUser).
-		Interface("users", _tenUsers).
+		Array("times", timeArray(_tenTimes)).
+		Object("user1", _oneUser).
+		Object("user2", _oneUser).
+		Array("users", _tenUsers).
 		Err(errExample)
 }
