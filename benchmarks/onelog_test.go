@@ -5,15 +5,7 @@ import (
 	"time"
 
 	"github.com/francoispqt/onelog"
-	"go.uber.org/zap/zapcore"
 )
-
-func (u *user) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-	enc.AddString("name", u.Name)
-	enc.AddString("email", u.Email)
-	enc.AddInt64("createdAt", u.CreatedAt.UnixNano())
-	return nil
-}
 
 func (u *user) MarshalObject(enc *onelog.Encoder) {
 	enc.AddStringKey("name", u.Name)
