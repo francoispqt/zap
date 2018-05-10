@@ -26,6 +26,36 @@ import (
 	"github.com/rs/zerolog"
 )
 
+func (uu users) MarshalZerologArray(a *zerolog.Array) {
+	for _, u := range uu {
+		a.Object(u)
+	}
+}
+
+func (u user) MarshalZerologObject(e *zerolog.Event) {
+	e.Str("name", u.Name).
+		Str("email", u.Email).
+		Int64("createdAt", u.CreatedAt.UnixNano())
+}
+
+func (tA timeArray) MarshalZerologArray(a *zerolog.Array) {
+	for _, t := range tA {
+		a.Int64(t.Unix())
+	}
+}
+
+func (tS stringArray) MarshalZerologArray(a *zerolog.Array) {
+	for _, t := range tS {
+		a.Str(t)
+	}
+}
+
+func (tI intArray) MarshalZerologArray(a *zerolog.Array) {
+	for _, t := range tI {
+		a.Int(t)
+	}
+}
+
 func newZerolog() zerolog.Logger {
 	return zerolog.New(ioutil.Discard).With().Timestamp().Logger()
 }
@@ -37,27 +67,27 @@ func newDisabledZerolog() zerolog.Logger {
 func fakeZerologFields(e *zerolog.Event) *zerolog.Event {
 	return e.
 		Int("int", _tenInts[0]).
-		Interface("ints", _tenInts).
+		Array("ints", intArray(_tenInts)).
 		Str("string", _tenStrings[0]).
-		Interface("strings", _tenStrings).
+		Array("strings", stringArray(_tenStrings)).
 		Time("time", _tenTimes[0]).
-		Interface("times", _tenTimes).
-		Interface("user1", _oneUser).
-		Interface("user2", _oneUser).
-		Interface("users", _tenUsers).
+		Array("times", timeArray(_tenTimes)).
+		Object("user1", _oneUser).
+		Object("user2", _oneUser).
+		Array("users", _tenUsers).
 		Err(errExample)
 }
 
 func fakeZerologContext(c zerolog.Context) zerolog.Context {
 	return c.
 		Int("int", _tenInts[0]).
-		Interface("ints", _tenInts).
+		Array("ints", intArray(_tenInts)).
 		Str("string", _tenStrings[0]).
-		Interface("strings", _tenStrings).
+		Array("strings", stringArray(_tenStrings)).
 		Time("time", _tenTimes[0]).
-		Interface("times", _tenTimes).
-		Interface("user1", _oneUser).
-		Interface("user2", _oneUser).
-		Interface("users", _tenUsers).
+		Array("times", timeArray(_tenTimes)).
+		Object("user1", _oneUser).
+		Object("user2", _oneUser).
+		Array("users", _tenUsers).
 		Err(errExample)
 }
